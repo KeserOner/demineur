@@ -2,5 +2,7 @@
 # coding=utf-8
 from modele import Grille
 
-test = Grille(5, 5)
-print test
+demineur = Grille(5, 5)
+demineur.displayGrid()
+demineur.fillGrid('easy')
+demineur.playAParty()
