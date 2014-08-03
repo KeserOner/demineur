@@ -1,8 +1,6 @@
 #!/usr/bin/python3.4
 # coding=utf-8
 
-import pygame
-from pygame.locals import *
 from modele import Grille
 import sys
 
