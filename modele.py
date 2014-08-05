@@ -56,12 +56,12 @@ class Grille:
             self.grid[x][y] = True
             i += 1
 
-    def checkNeighboor(self, x, y):
-        count = 0
+    def getNeighboor(self, x, y):
         min_col = y - 1
         max_col = y + 1
         min_row = x - 1
         max_row = x + 1
+        l = []
         if x == 0:
             min_row = 0
         elif x == self.rows - 1:
@@ -76,10 +76,17 @@ class Grille:
         while (i <= max_row):
             j = min_col
             while (j <= max_col):
-                if self.grid[i][j]:
-                    count += 1
+                l.append((i, j))
                 j += 1
             i += 1
+        return l
+
+    def checkNeighboor(self, x, y):
+        count = 0
+        liste = self.getNeighboor(x, y)
+        for point in liste:
+            if self.grid[point[0]][point[1]]:
+                count += 1
         return count
 
     def partyOver(self):
@@ -88,11 +95,18 @@ class Grille:
                 return False
         return True
 
-    def playAShot(self, x, y, flag):
-        if self.grid[x][y] and not flag:
-            return -1
+    def playAShot(self, x, y, flag, checked):
+        if flag:
+            self.game[x][y] = 'f   '
         else:
-            return self.checkNeighboor(x, y)
+            checked[x][y] = True
+            shot = self.checkNeighboor(x, y)
+            self.game[x][y] = '%s   ' % (str(shot))
+            if shot == 0:
+                li = self.getNeighboor(x, y)
+                for point in li:
+                    if not checked[point[0]][point[1]]:
+                        self.playAShot(point[0], point[1], False, checked)
 
     def playAGame(self):
         flag = False
@@ -103,19 +117,20 @@ class Grille:
         y = int(choice_y)
         if choice_flag == 'Y' or choice_flag == 'y':
             flag = True
-        shot = self.playAShot(x, y, flag)
-        if shot == -1:
-            self.game[x][y] = 'x   '
+        if not flag and self.grid[x][y]:
+            self.game[x][y] = 'x  '
             self.displayGame()
             return False
-        elif flag:
-            self.game[x][y] = 'f   '
-            self.displayGame()
-            return True
-        else:
-            self.game[x][y] = '%s   ' % (str(shot))
-            self.displayGame()
-            return True
+        checked = []
+        for line in self.game:
+            check = []
+            for el in line:
+                check.append(False)
+            checked.append(check)
+        self.playAShot(x, y, flag, checked)
+        self.displayGame()
+        return True
+
 
     def playAParty(self):
         pag = self.playAGame()

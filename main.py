@@ -1,4 +1,4 @@
-#!/usr/bin/python3.4
+#!/usr/bin/python
 # coding=utf-8
 
 from modele import Grille
@@ -8,4 +8,3 @@ demineur = Grille(10, 10)
 demineur.displayGrid()
 demineur.fillGrid('easy')
 demineur.playAParty()
-
