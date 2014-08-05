@@ -8,19 +8,17 @@ class Grille:
         self.column = column
         self.grid = []
         self.game = []
-        i = 0
-        j = 0
-        while (i < rows):
+
+        for i in range(rows):
             line = []
             game_line = []
-            j = 0
-            while (j < column):
+
+            for j in range(column):
                 line.append(False)
                 game_line.append('*   ')
-                j += 1
+
             self.grid.append(line)
             self.game.append(game_line)
-            i += 1
 
     def __repr__(self):
         return "%d %d" % (self.rows, self.column)
@@ -42,7 +40,7 @@ class Grille:
 
     def fillGrid(self, mode):
         places = self.rows * self.column
-        i = 0
+
         if (mode == 'hard'):
             mines = int(places * 0.75)
         elif (mode == 'medium'):
@@ -50,11 +48,10 @@ class Grille:
         else:
             mines = int(places * 0.25)
 
-        while (i < mines):
+        for i in range(mines):
             x = random.randint(0, self.rows - 1)
             y = random.randint(0, self.column - 1)
             self.grid[x][y] = True
-            i += 1
 
     def getNeighboor(self, x, y):
         min_col = y - 1
@@ -73,9 +70,9 @@ class Grille:
             max_col = self.column - 1
 
         i = min_row
-        while (i <= max_row):
+        while i <= max_row:
             j = min_col
-            while (j <= max_col):
+            while j <= max_col:
                 l.append((i, j))
                 j += 1
             i += 1
