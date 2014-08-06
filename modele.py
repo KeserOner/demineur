@@ -1,4 +1,5 @@
 import random
+import os
 
 
 class Grille:
@@ -24,6 +25,7 @@ class Grille:
         return "%d %d" % (self.rows, self.column)
 
     def displayGrid(self):
+        os.system('clear')
         for line in self.grid:
             string = ''
             for elt in line:
@@ -93,6 +95,7 @@ class Grille:
         return True
 
     def playAShot(self, x, y, flag, checked):
+        os.system('clear')
         if flag:
             self.game[x][y] = 'f   '
         else:
@@ -116,6 +119,7 @@ class Grille:
             flag = True
         if not flag and self.grid[x][y]:
             self.game[x][y] = 'x  '
+            os.system('clear')
             self.displayGame()
             return False
         checked = []
