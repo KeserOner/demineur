@@ -119,10 +119,10 @@ class Grille:
             flag = True
         if not flag and self.grid[x][y]:
             self.game[x][y] = 'x  '
+            os.system('clear')
             self.displayGame()
             return False
         checked = []
-        True = False
         for line in self.game:
             check = []
             for el in line:
