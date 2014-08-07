@@ -10,30 +10,24 @@ class Grille:
         self.grid = []
         self.game = []
 
-        for i in range(rows):
+        for i in range(rows + 1):
             line = []
             game_line = []
 
-            for j in range(column):
+            for j in range(column + 1):
+                if i == 0:
+                    game_line.append('{}   '.format(str(j)))
+                elif j == 0:
+                    game_line.append('{}   '.format(str(i)))
+                else:
+                    game_line.append('*   ')
                 line.append(False)
-                game_line.append('*   ')
 
             self.grid.append(line)
             self.game.append(game_line)
 
     def __repr__(self):
         return "%d %d" % (self.rows, self.column)
-
-    def displayGrid(self):
-        os.system('clear')
-        for line in self.grid:
-            string = ''
-            for elt in line:
-                if not elt:
-                    string += '*   '
-                else:
-                    string += 'x   '
-            print "%r \n" % (string)
 
     def displayGame(self):
         for line in self.game:
@@ -51,8 +45,8 @@ class Grille:
             mines = int(places * 0.25)
 
         for i in range(mines):
-            x = random.randint(0, self.rows - 1)
-            y = random.randint(0, self.column - 1)
+            x = random.randint(1, self.rows)
+            y = random.randint(1, self.column)
             self.grid[x][y] = True
 
     def getNeighboor(self, x, y):
@@ -110,11 +104,18 @@ class Grille:
 
     def playAGame(self):
         flag = False
+        good_input = False
         choice_flag = raw_input('Flag ?: Y/N  ')
-        choice_x = input('Enter a row: ')
-        x = int(choice_x)
-        choice_y = input('Enter a column: ')
-        y = int(choice_y)
+        while not good_input:
+            choice_x = input('Enter a row (from 1 to {}) : '.format(str(self.rows)))
+            x = int(choice_x)
+            choice_y = input('Enter a column (from 1 to {}) : '.format(str(self.column)))
+            y = int(choice_y)
+            if x <= 0 or x > self.rows or y <= 0 or y  > self.column:
+                print 'Invalid coordinates submit, try again !'
+            else:
+                good_input = True
+
         if choice_flag == 'Y' or choice_flag == 'y':
             flag = True
         if not flag and self.grid[x][y]:
