@@ -107,10 +107,8 @@ class Grille:
         good_input = False
         choice_flag = raw_input('Flag ?: Y/N  ')
         while not good_input:
-            choice_x = input('Enter a row (from 1 to {}) : '.format(str(self.rows)))
-            x = int(choice_x)
-            choice_y = input('Enter a column (from 1 to {}) : '.format(str(self.column)))
-            y = int(choice_y)
+            x = int(input('Enter a row (from 1 to {}) : '.format(str(self.rows))))
+            y = int(input('Enter a column (from 1 to {}) : '.format(str(self.column))))
             if x <= 0 or x > self.rows or y <= 0 or y  > self.column:
                 print 'Invalid coordinates submit, try again !'
             else:
